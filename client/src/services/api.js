@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'fullstack-8vo3mhm48-rahmans-projects-5d6814d1.vercel.app/api',
+    baseURL: 'https://fullstackca.onrender.com/api',
     headers: {
         'Content-Type': 'application/json',
     },
