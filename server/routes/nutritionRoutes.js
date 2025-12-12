@@ -6,6 +6,6 @@ const router = express.Router();
 
 router.get('/', protect, getNutritionPlans);
 router.post('/', protect, authorize('Admin', 'Doctor'), createNutritionPlan);
-router.post('/seed', protect, authorize('Admin'), seedNutritionData); // Temporary endpoint for demo
+router.post('/seed', seedNutritionData); // Temporarily open for easy seeding
 
 export default router;

@@ -1,5 +1,6 @@
 import { useAuth } from '../context/AuthContext';
 import { Link } from 'react-router-dom';
+import AppointmentNotification from '../components/AppointmentNotification';
 
 const Dashboard = () => {
     const { user, logout } = useAuth();
@@ -17,6 +18,9 @@ const Dashboard = () => {
             </nav>
 
             <main className="p-8">
+                {/* Appointment Notifications for Patients */}
+                {user?.role === 'Patient' && <AppointmentNotification />}
+
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     {/* Role-Specific Dashboard Widgets */}
 

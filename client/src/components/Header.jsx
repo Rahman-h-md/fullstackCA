@@ -62,7 +62,7 @@ const Header = () => {
             {/* Marquee / Ticker */}
             <div className="bg-yellow-100 text-[#9c1f6e] py-1 px-4 text-sm font-semibold border-b border-gray-200">
                 <marquee behavior="scroll" direction="left">
-                    Welcome to SwasthyaSetu - Bridging the gap in rural healthcare. Pulse Polio Immunization drive on 10th Dec.
+                    Welcome to SwasthyaSetu - Bridging the gap in rural healthcare.
                 </marquee>
             </div>
         </header>

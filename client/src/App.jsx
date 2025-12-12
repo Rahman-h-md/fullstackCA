@@ -28,6 +28,7 @@ import PatientHealthRecords from './pages/PatientHealthRecords';
 import HealthSchemes from './pages/HealthSchemes';
 import Schemes from './pages/Schemes';
 import Services from './pages/Services';
+import Nutrition from './pages/Nutrition';
 import ProtectedRoute from './components/ProtectedRoute';
 
 import useSync from './hooks/useSync';
@@ -146,6 +147,11 @@ const AppContent = () => {
         <Route path="/health-schemes" element={<HealthSchemes />} />
         <Route path="/schemes" element={<Schemes />} />
         <Route path="/services" element={<Services />} />
+        <Route path="/nutrition" element={
+          <ProtectedRoute>
+            <Nutrition />
+          </ProtectedRoute>
+        } />
       </Routes>
     </div >
   );

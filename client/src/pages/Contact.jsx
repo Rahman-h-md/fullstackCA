@@ -32,47 +32,6 @@ const Contact = () => {
 
     return (
         <div className="min-h-screen bg-white">
-            {/* Single Row Header */}
-            <div className="bg-white border-b shadow-sm">
-                <div className="max-w-7xl mx-auto px-4 py-3">
-                    <div className="flex justify-between items-center">
-                        {/* Left: Logo and Title */}
-                        <div className="flex items-center gap-4">
-                            <img
-                                src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg"
-                                alt="Government of India"
-                                className="h-16"
-                            />
-                            <div>
-                                <h1 className="text-xl font-bold text-[#1B365D]">Health and Family Welfare Department</h1>
-                            </div>
-                        </div>
-
-                        {/* Center: Navigation Links */}
-                        <nav className="flex gap-6">
-                            <Link to="/" className="text-[#1B365D] hover:text-blue-600 font-medium transition">
-                                Home
-                            </Link>
-                            <Link to="/about" className="text-[#1B365D] hover:text-blue-600 font-medium transition">
-                                About Us
-                            </Link>
-                            <Link to="/login" className="text-[#1B365D] hover:text-blue-600 font-medium transition">
-                                E-Citizen
-                            </Link>
-                            <Link to="/contact" className="text-blue-600 font-semibold transition">
-                                Contact
-                            </Link>
-                        </nav>
-
-                        {/* Right: Login and Register */}
-                        <div className="flex items-center gap-4 text-sm">
-                            <Link to="/login" className="text-[#1B365D] hover:underline font-medium">Login</Link>
-                            <Link to="/register" className="text-[#1B365D] hover:underline font-medium">Register</Link>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             {/* Main Content */}
             <div className="max-w-7xl mx-auto px-4 py-8">
                 <h1 className="text-4xl font-bold text-[#1B365D] mb-6">Contact Us</h1>

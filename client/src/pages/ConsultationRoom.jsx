@@ -252,7 +252,7 @@ const ConsultationRoom = () => {
                                     className="w-full h-full object-cover mirror"
                                 />
                                 <div className="absolute top-2 left-2 bg-black/50 text-white text-xs px-2 py-1 rounded">
-                                    You (Doctor)
+                                    You ({isDoctor ? 'Doctor' : 'Patient'})
                                 </div>
                                 {isVideoOff && (
                                     <div className="absolute inset-0 bg-gray-900 flex items-center justify-center">
@@ -280,6 +280,16 @@ const ConsultationRoom = () => {
                                     <div className={`w-2 h-2 rounded-full ${remoteStream ? 'bg-green-400 animate-pulse' : 'bg-yellow-400'}`}></div>
                                     <span>{remoteStream ? 'Connected' : 'Connecting...'}</span>
                                 </div>
+                            </div>
+
+                            {/* Debug Panel */}
+                            <div className="bg-red-900/50 rounded p-3 text-white text-xs">
+                                <div className="font-bold mb-1">Debug Info:</div>
+                                <div>Local Stream: {localStream ? '✅ Active' : '❌ None'}</div>
+                                <div>Remote Stream: {remoteStream ? '✅ Active' : '❌ None'}</div>
+                                <div>Call Active: {isCallActive ? 'Yes' : 'No'}</div>
+                                <div>Role: {isDoctor ? 'Doctor (Initiator)' : 'Patient (Receiver)'}</div>
+                                {callError && <div className="text-red-300 mt-1">Error: {callError}</div>}
                             </div>
                         </div>
                     )}

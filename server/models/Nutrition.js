@@ -11,7 +11,7 @@ const nutritionSchema = new mongoose.Schema({
     category: {
         type: String,
         required: true,
-        enum: ['Anemia', 'Diabetes', 'Pregnancy', 'Hypertension', 'Malnutrition', 'General']
+        enum: ['Diabetes', 'Hypertension', 'Anemia', 'Obesity', 'Heart Disease', 'Thyroid', 'PCOD/PCOS', 'Arthritis', 'Pregnancy', 'Malnutrition', 'General']
     },
     recommendedItems: [{ type: String }], /* e.g., ["Spinach", "Red Meat"] */
     avoidItems: [{ type: String }],
@@ -21,6 +21,7 @@ const nutritionSchema = new mongoose.Schema({
         dinner: [String],
         snacks: [String]
     },
+    exercises: [{ type: String }], /* Exercise recommendations */
     createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     createdAt: { type: Date, default: Date.now }
 });

@@ -25,6 +25,7 @@ const httpServer = createServer(app);
 const io = new Server(httpServer, {
     cors: {
         origin: ["https://fullstack-ca-98bp-h4x70502f-rahmans-projects-5d6814d1.vercel.app", "https://fullstack-ca.vercel.app"],
+        // origin: "http://localhost:5173",
         methods: ["GET", "POST"]
     }
 });
@@ -62,39 +63,60 @@ app.get('/', (req, res) => {
 });
 
 io.on('connection', (socket) => {
-    console.log('User Connected:', socket.id);
+    console.log('🔌 User Connected:', socket.id);
 
     // WebRTC Signaling Events
-    socket.on('join-room', (roomId) => {
-        console.log(`User ${socket.id} joining room ${roomId}`);
+    socket.on('join-room', (data) => {
+        // Handle both old format (just roomId string) and new format (object with roomId and isInitiator)
+        const roomId = typeof data === 'string' ? data : data.roomId;
+        const isInitiator = typeof data === 'object' ? data.isInitiator : false;
+
+        console.log(`🚪 User ${socket.id} joining room ${roomId} as ${isInitiator ? 'INITIATOR' : 'RECEIVER'}`);
+
+        // Get current room members before joining
+        const room = io.sockets.adapter.rooms.get(roomId);
+        const currentMembers = room ? room.size : 0;
+        console.log(`   Current members in room: ${currentMembers}`);
+
         socket.join(roomId);
-        // Notify others in the room
+
+        // Notify others in the room that someone joined
         socket.to(roomId).emit('user-joined', socket.id);
+
+        // If this is the second person, emit 'ready' to both
+        if (currentMembers === 1) {
+            console.log(`   ✅ Room ${roomId} is now ready with 2 members`);
+            io.to(roomId).emit('ready');
+        }
+
+        console.log(`   ✅ User ${socket.id} joined room ${roomId}`);
     });
 
-    socket.on('offer', ({ roomId, signal }) => {
-        console.log(`Offer from ${socket.id} in room ${roomId}`);
-        socket.to(roomId).emit('offer', signal);
+    socket.on('offer', ({ roomId, offer }) => {
+        console.log(`📤 Offer from ${socket.id} in room ${roomId}`);
+        socket.to(roomId).emit('offer', offer);
+        console.log(`   ✅ Offer relayed to room ${roomId}`);
     });
 
-    socket.on('answer', ({ roomId, signal }) => {
-        console.log(`Answer from ${socket.id} in room ${roomId}`);
-        socket.to(roomId).emit('answer', signal);
+    socket.on('answer', ({ roomId, answer }) => {
+        console.log(`📤 Answer from ${socket.id} in room ${roomId}`);
+        socket.to(roomId).emit('answer', answer);
+        console.log(`   ✅ Answer relayed to room ${roomId}`);
     });
 
     socket.on('ice-candidate', ({ roomId, candidate }) => {
-        console.log(`ICE candidate from ${socket.id} in room ${roomId}`);
+        console.log(`📤 ICE candidate from ${socket.id} in room ${roomId}`);
         socket.to(roomId).emit('ice-candidate', candidate);
     });
 
     socket.on('leave-room', (roomId) => {
-        console.log(`User ${socket.id} leaving room ${roomId}`);
+        console.log(`🚪 User ${socket.id} leaving room ${roomId}`);
         socket.leave(roomId);
         socket.to(roomId).emit('user-left', socket.id);
     });
 
     socket.on('disconnect', () => {
-        console.log('User Disconnected', socket.id);
+        console.log('🔌 User Disconnected', socket.id);
     });
 });
 
