@@ -93,9 +93,18 @@ const useWebRTC = (roomId, isInitiator = false) => {
         // Handle incoming tracks
         pc.ontrack = (event) => {
             console.log('✅ Received remote track:', event.track.kind);
-            const [stream] = event.streams;
-            console.log('✅ Setting remote stream');
-            setRemoteStream(stream);
+            console.log('   Track ID:', event.track.id);
+            console.log('   Stream ID:', event.streams[0]?.id);
+            console.log('   Total streams:', event.streams.length);
+
+            if (event.streams && event.streams[0]) {
+                const stream = event.streams[0];
+                console.log('   Stream tracks:', stream.getTracks().map(t => `${t.kind}:${t.id}`));
+                console.log('✅ Setting remote stream with', stream.getTracks().length, 'tracks');
+                setRemoteStream(stream);
+            } else {
+                console.warn('⚠️ No streams in track event');
+            }
         };
 
         // Handle ICE candidates
