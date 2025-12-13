@@ -33,6 +33,8 @@ const useWebRTC = (roomId, isInitiator = false) => {
         ]
     };
 
+    const [socketStatus, setSocketStatus] = useState('Initializing...');
+
     useEffect(() => {
         // Connect to Socket.io server using environment variable
         const socketUrl = import.meta.env.VITE_SOCKET_URL || 'http://localhost:5000';
@@ -45,6 +47,17 @@ const useWebRTC = (roomId, isInitiator = false) => {
 
         socketRef.current.on('connect', () => {
             console.log('✅ Connected to signaling server');
+            setSocketStatus('Connected ✅');
+        });
+
+        socketRef.current.on('disconnect', () => {
+            console.log('❌ Disconnected from signaling server');
+            setSocketStatus('Disconnected ❌');
+        });
+
+        socketRef.current.on('connect_error', (err) => {
+            console.error('❌ Socket connection error:', err);
+            setSocketStatus(`Error: ${err.message}`);
         });
 
         socketRef.current.on('ready', async () => {
@@ -295,7 +308,8 @@ const useWebRTC = (roomId, isInitiator = false) => {
         startCall,
         endCall,
         toggleMute,
-        toggleVideo
+        toggleVideo,
+        socketStatus
     };
 };
 

@@ -30,7 +30,8 @@ const ConsultationRoom = () => {
         startCall,
         endCall,
         toggleMute,
-        toggleVideo
+        toggleVideo,
+        socketStatus
     } = useWebRTC(id, isDoctor); // Doctor is the initiator
 
     const [prescription, setPrescription] = useState({
@@ -285,6 +286,9 @@ const ConsultationRoom = () => {
                             {/* Debug Panel */}
                             <div className="bg-red-900/50 rounded p-3 text-white text-xs">
                                 <div className="font-bold mb-1">Debug Info:</div>
+                                <div>Room ID: {id}</div>
+                                <div>Socket: {socketStatus}</div>
+                                <div>URL: {import.meta.env.VITE_SOCKET_URL || 'Localhost'}</div>
                                 <div>Local Stream: {localStream ? '✅ Active' : '❌ None'}</div>
                                 <div>Remote Stream: {remoteStream ? '✅ Active' : '❌ None'}</div>
                                 <div>Call Active: {isCallActive ? 'Yes' : 'No'}</div>
