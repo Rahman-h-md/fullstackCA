@@ -18,13 +18,30 @@ const useWebRTC = (roomId, isInitiator = false) => {
         iceServers: [
             { urls: 'stun:stun.l.google.com:19302' },
             { urls: 'stun:stun1.l.google.com:19302' },
-            { urls: 'stun:stun2.l.google.com:19302' }
+            { urls: 'stun:stun2.l.google.com:19302' },
+            // Free TURN server for NAT traversal (required for different networks)
+            {
+                urls: 'turn:openrelay.metered.ca:80',
+                username: 'openrelayproject',
+                credential: 'openrelayproject'
+            },
+            {
+                urls: 'turn:openrelay.metered.ca:443',
+                username: 'openrelayproject',
+                credential: 'openrelayproject'
+            }
         ]
     };
 
     useEffect(() => {
-        // Connect to Socket.io server
-        socketRef.current = io('http://localhost:5000');
+        // Connect to Socket.io server using environment variable
+        const socketUrl = import.meta.env.VITE_SOCKET_URL || 'http://localhost:5000';
+        console.log('🔌 Connecting to socket server:', socketUrl);
+        socketRef.current = io(socketUrl, {
+            transports: ['websocket', 'polling'], // Try websocket first, fallback to polling
+            reconnectionAttempts: 5,
+            reconnectionDelay: 1000
+        });
 
         socketRef.current.on('connect', () => {
             console.log('✅ Connected to signaling server');

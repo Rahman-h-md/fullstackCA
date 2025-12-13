@@ -24,9 +24,9 @@ const app = express();
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
     cors: {
-        origin: ["https://fullstack-ca-98bp-h4x70502f-rahmans-projects-5d6814d1.vercel.app", "https://fullstack-ca.vercel.app"],
-        // origin: "http://localhost:5173",
-        methods: ["GET", "POST"]
+        origin: process.env.CLIENT_URL || "http://localhost:5173",
+        methods: ["GET", "POST"],
+        credentials: true
     }
 });
 
