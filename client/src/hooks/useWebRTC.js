@@ -308,8 +308,11 @@ const useWebRTC = (roomId, isInitiator = false) => {
         startCall,
         endCall,
         toggleMute,
+        toggleMute,
         toggleVideo,
-        socketStatus
+        socketStatus,
+        connectionState: peerConnectionRef.current?.connectionState,
+        iceConnectionState: peerConnectionRef.current?.iceConnectionState
     };
 };
 
