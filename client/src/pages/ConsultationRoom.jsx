@@ -30,7 +30,6 @@ const ConsultationRoom = () => {
         startCall,
         endCall,
         toggleMute,
-        toggleMute,
         toggleVideo,
         socketStatus,
         connectionState,
