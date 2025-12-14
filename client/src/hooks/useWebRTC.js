@@ -467,7 +467,19 @@ const useWebRTC = (roomId, isInitiator = false) => {
         }
     };
 
-
+    const handleAnswer = async (answer) => {
+        try {
+            if (!peerConnectionRef.current) {
+                console.error('❌ Received answer but no peer connection');
+                return;
+            }
+            console.log('📝 Setting remote description (answer)');
+            await peerConnectionRef.current.setRemoteDescription(new RTCSessionDescription(answer));
+        } catch (err) {
+            console.error('❌ Error handling answer:', err);
+            setError('Failed to handle answer');
+        }
+    };
 
     const handleUserLeft = () => {
         if (peerConnectionRef.current) {
@@ -572,7 +584,6 @@ const useWebRTC = (roomId, isInitiator = false) => {
         error,
         startCall,
         endCall,
-        toggleMute,
         toggleMute,
         toggleVideo,
         socketStatus,
