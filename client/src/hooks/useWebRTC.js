@@ -9,6 +9,7 @@ const useWebRTC = (roomId, isInitiator = false) => {
     const [isMuted, setIsMuted] = useState(false);
     const [isVideoOff, setIsVideoOff] = useState(false);
     const [error, setError] = useState(null);
+    const [remoteEnded, setRemoteEnded] = useState(false);
 
     const socketRef = useRef(null);
     const peerConnectionRef = useRef(null);
@@ -467,16 +468,7 @@ const useWebRTC = (roomId, isInitiator = false) => {
         }
     };
 
-    const handleAnswer = async (answer) => {
-        try {
-            console.log('📝 Setting remote description (answer)');
-            await peerConnectionRef.current.setRemoteDescription(new RTCSessionDescription(answer));
-            console.log('✅ Answer set successfully');
-        } catch (err) {
-            console.error('❌ Error handling answer:', err);
-            setError('Failed to handle answer');
-        }
-    };
+
 
     const handleUserLeft = () => {
         if (peerConnectionRef.current) {
@@ -484,6 +476,7 @@ const useWebRTC = (roomId, isInitiator = false) => {
             peerConnectionRef.current = null;
         }
         setRemoteStream(null);
+        setRemoteEnded(true);
     };
 
     const startCall = async () => {
@@ -585,6 +578,7 @@ const useWebRTC = (roomId, isInitiator = false) => {
         toggleMute,
         toggleVideo,
         socketStatus,
+        remoteEnded,
         connectionState: peerConnectionRef.current?.connectionState,
         iceConnectionState: peerConnectionRef.current?.iceConnectionState
     };
