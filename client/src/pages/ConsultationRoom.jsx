@@ -32,7 +32,8 @@ const ConsultationRoom = () => {
         toggleMute,
         toggleVideo,
         socketStatus,
-        iceConnectionState
+        iceConnectionState,
+        connectionState
     } = useWebRTC(id, isDoctor); // Doctor is the initiator
 
     const [prescription, setPrescription] = useState({
