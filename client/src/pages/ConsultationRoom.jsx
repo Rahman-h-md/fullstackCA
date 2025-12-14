@@ -232,14 +232,17 @@ const ConsultationRoom = () => {
                                             className="w-full h-full object-cover"
                                         />
                                         <div className="absolute top-2 left-2 bg-black/50 text-white text-xs px-2 py-1 rounded">
-                                            {isDoctor ? 'Patient' : 'Doctor'}
+                                            {isDoctor
+                                                ? (appointment?.patientId?.name || 'Patient')
+                                                : (appointment?.doctorId?.name || 'Doctor')
+                                            }
                                         </div>
                                     </>
                                 ) : (
                                     <div className="w-full h-full flex items-center justify-center text-white">
                                         <div className="text-center">
                                             <div className="animate-pulse text-4xl mb-2">⏳</div>
-                                            <p className="text-sm">Waiting for patient to join...</p>
+                                            <p className="text-sm">Waiting for {isDoctor ? 'patient' : 'doctor'} to join...</p>
                                         </div>
                                     </div>
                                 )}
@@ -255,7 +258,7 @@ const ConsultationRoom = () => {
                                     className="w-full h-full object-cover mirror"
                                 />
                                 <div className="absolute top-2 left-2 bg-black/50 text-white text-xs px-2 py-1 rounded">
-                                    You ({isDoctor ? 'Doctor' : 'Patient'})
+                                    You ({user?.name || (isDoctor ? 'Doctor' : 'Patient')})
                                 </div>
                                 {isVideoOff && (
                                     <div className="absolute inset-0 bg-gray-900 flex items-center justify-center">

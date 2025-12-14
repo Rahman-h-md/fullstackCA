@@ -495,8 +495,9 @@ const useWebRTC = (roomId, isInitiator = false) => {
             // Get user media
             const stream = await navigator.mediaDevices.getUserMedia({
                 video: {
-                    width: { ideal: 1280 },
-                    height: { ideal: 720 }
+                    width: { ideal: 640 },
+                    height: { ideal: 480 },
+                    frameRate: { ideal: 24 }
                 },
                 audio: true
             });
