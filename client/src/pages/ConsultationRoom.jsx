@@ -32,9 +32,7 @@ const ConsultationRoom = () => {
         toggleMute,
         toggleVideo,
         socketStatus,
-        connectionState,
-        iceConnectionState,
-        remoteEnded
+        iceConnectionState
     } = useWebRTC(id, isDoctor); // Doctor is the initiator
 
     const [prescription, setPrescription] = useState({
@@ -84,21 +82,19 @@ const ConsultationRoom = () => {
         fetchAppointment();
     }, [id]);
 
-    const [wasCallEnded, setWasCallEnded] = useState(false);
-
     // Auto-start video call for patients (only on Chrome/Edge, not Firefox)
     useEffect(() => {
         // Detect if browser is Firefox
         const isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
 
-        if (!isDoctor && appointment && !isCallActive && !isConnecting && !isFirefox && !wasCallEnded) {
+        if (!isDoctor && appointment && !isCallActive && !isConnecting && !isFirefox) {
             // Small delay to ensure component is fully mounted
             const timer = setTimeout(() => {
                 startCall();
             }, 500);
             return () => clearTimeout(timer);
         }
-    }, [appointment, isDoctor, isCallActive, isConnecting, startCall, wasCallEnded]);
+    }, [appointment, isDoctor, isCallActive, isConnecting, startCall]);
 
     // Update video elements when streams change
     useEffect(() => {
@@ -113,10 +109,7 @@ const ConsultationRoom = () => {
         }
     }, [remoteStream]);
 
-    const handleEndCall = () => {
-        endCall();
-        setWasCallEnded(true);
-    };
+
 
     // ... existing code ...
 
@@ -208,59 +201,23 @@ const ConsultationRoom = () => {
                     {/* Video Streams */}
                     {!isCallActive ? (
                         <div className="space-y-3">
-                            {wasCallEnded || remoteEnded ? (
-                                <div className="bg-gray-100 rounded-lg p-8 text-center border-2 border-dashed border-gray-300">
-                                    <div className="text-4xl mb-3">👋</div>
-                                    <h3 className="text-xl font-bold text-gray-700 mb-2">Session Ended</h3>
-
-                                    {/* Message Logic */}
-                                    {wasCallEnded ? (
-                                        // I ended the call
-                                        isDoctor ? (
-                                            <p className="text-gray-600">You have ended the consultation.</p>
-                                        ) : (
-                                            <div className="space-y-2">
-                                                <p className="text-gray-800 font-semibold">Call Ended by Patient</p>
-                                                <p className="text-sm text-gray-500">Wait for the doctor to complete the prescription if not done yet.</p>
-                                                <button
-                                                    onClick={() => setWasCallEnded(false)}
-                                                    className="mt-4 text-blue-600 text-sm hover:underline"
-                                                >
-                                                    Rejoin Call
-                                                </button>
-                                            </div>
-                                        )
-                                    ) : (
-                                        // Remote ended the call
-                                        isDoctor ? (
-                                            <p className="text-gray-800 font-semibold">Call Ended by Patient</p>
-                                        ) : (
-                                            <div className="space-y-2">
-                                                <p className="text-purple-800 font-bold">Session Ended</p>
-                                                <p className="text-sm text-gray-600">Check your "My Reports" for the doctor's prescription.</p>
-                                            </div>
-                                        )
-                                    )}
-                                </div>
-                            ) : (
-                                <button
-                                    onClick={startCall}
-                                    disabled={isConnecting}
-                                    className="w-full bg-white hover:bg-gray-100 text-blue-700 font-semibold py-3 px-4 rounded-lg transition shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
-                                >
-                                    {isConnecting ? (
-                                        <div className="flex items-center justify-center gap-2">
-                                            <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-blue-700"></div>
-                                            <span>Connecting...</span>
-                                        </div>
-                                    ) : (
-                                        <div className="flex items-center justify-center gap-2">
-                                            <span className="text-2xl">🎥</span>
-                                            <span>Start Video Call</span>
-                                        </div>
-                                    )}
-                                </button>
-                            )}
+                            <button
+                                onClick={startCall}
+                                disabled={isConnecting}
+                                className="w-full bg-white hover:bg-gray-100 text-blue-700 font-semibold py-3 px-4 rounded-lg transition shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
+                            >
+                                {isConnecting ? (
+                                    <div className="flex items-center justify-center gap-2">
+                                        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-blue-700"></div>
+                                        <span>Connecting...</span>
+                                    </div>
+                                ) : (
+                                    <div className="flex items-center justify-center gap-2">
+                                        <span className="text-2xl">🎥</span>
+                                        <span>Start Video Call</span>
+                                    </div>
+                                )}
+                            </button>
 
                             {callError && (
                                 <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded text-sm">
@@ -335,7 +292,7 @@ const ConsultationRoom = () => {
                                 isVideoOff={isVideoOff}
                                 onToggleMute={toggleMute}
                                 onToggleVideo={toggleVideo}
-                                onEndCall={handleEndCall}
+                                onEndCall={endCall}
                                 isCallActive={isCallActive}
                             />
 

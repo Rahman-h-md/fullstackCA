@@ -9,7 +9,6 @@ const useWebRTC = (roomId, isInitiator = false) => {
     const [isMuted, setIsMuted] = useState(false);
     const [isVideoOff, setIsVideoOff] = useState(false);
     const [error, setError] = useState(null);
-    const [remoteEnded, setRemoteEnded] = useState(false);
 
     const socketRef = useRef(null);
     const peerConnectionRef = useRef(null);
@@ -476,7 +475,6 @@ const useWebRTC = (roomId, isInitiator = false) => {
             peerConnectionRef.current = null;
         }
         setRemoteStream(null);
-        setRemoteEnded(true);
     };
 
     const startCall = async () => {
@@ -578,7 +576,6 @@ const useWebRTC = (roomId, isInitiator = false) => {
         toggleMute,
         toggleVideo,
         socketStatus,
-        remoteEnded,
         connectionState: peerConnectionRef.current?.connectionState,
         iceConnectionState: peerConnectionRef.current?.iceConnectionState
     };
