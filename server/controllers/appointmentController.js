@@ -42,6 +42,7 @@ export const getMyAppointments = async (req, res) => {
     try {
         const appointments = await Appointment.find({ patientId: req.user.id })
             .populate('doctorId', 'name phone')
+            .populate('patientId', 'name email phone')
             .sort({ date: -1 });
 
         const appointmentsWithPrescriptions = await Promise.all(appointments.map(async (apt) => {

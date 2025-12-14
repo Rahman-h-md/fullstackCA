@@ -168,8 +168,8 @@ const ConsultationRoom = () => {
                     <h2 className="text-xl font-bold text-[#1B365D]">Patient Details</h2>
                     <div className="mt-2 text-sm text-gray-700 space-y-1">
                         <p><span className="font-semibold">Name:</span> {appointment.patientId?.name || appointment.patientId?.fullName}</p>
-                        <p><span className="font-semibold">Age/Gender:</span> {appointment.patientId?.age} / {appointment.patientId?.gender}</p>
-                        <p><span className="font-semibold">Contact:</span> {appointment.patientId?.contactNumber || 'N/A'}</p>
+                        <p><span className="font-semibold">Age/Gender:</span> {appointment.patientId?.age || 'N/A'} / {appointment.patientId?.gender || 'N/A'}</p>
+                        <p><span className="font-semibold">Contact:</span> {appointment.patientId?.contactNumber || appointment.patientId?.phone || 'N/A'}</p>
                         <p><span className="font-semibold">Reason:</span> {appointment.reason}</p>
                     </div>
                 </div>
@@ -232,7 +232,7 @@ const ConsultationRoom = () => {
                                             className="w-full h-full object-cover"
                                         />
                                         <div className="absolute top-2 left-2 bg-black/50 text-white text-xs px-2 py-1 rounded">
-                                            Patient
+                                            {isDoctor ? 'Patient' : 'Doctor'}
                                         </div>
                                     </>
                                 ) : (
