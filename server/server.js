@@ -83,9 +83,10 @@ io.on('connection', (socket) => {
         // Notify others in the room that someone joined
         socket.to(roomId).emit('user-joined', socket.id);
 
-        // If this is the second person, emit 'ready' to both
-        if (currentMembers === 1) {
-            console.log(`   ✅ Room ${roomId} is now ready with 2 members`);
+        // If there is at least one other person (so now 2+), emit 'ready'
+        // Using >= 1 handles cases where ghost connections might exist
+        if (currentMembers >= 1) {
+            console.log(`   ✅ Room ${roomId} is now ready with ${currentMembers + 1} members`);
             io.to(roomId).emit('ready');
         }
 
