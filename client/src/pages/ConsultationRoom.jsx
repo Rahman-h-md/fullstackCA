@@ -111,20 +111,7 @@ const ConsultationRoom = () => {
 
 
 
-    // ... existing code ...
 
-    // INSIDE RENDER (lines 200-ish)
-    // Replace startCall with handleEndCall in VideoCallControls if needed, OR just pass handleEndCall to it?
-    // VideoCallControls takes onEndCall.
-
-    // ...
-
-    <div className="w-full h-full flex items-center justify-center text-white">
-        <div className="text-center">
-            <div className="animate-pulse text-4xl mb-2">⏳</div>
-            <p className="text-sm">Waiting for {isDoctor ? 'patient' : 'doctor'} to join...</p>
-        </div>
-    </div>
 
     const handlePrescriptionChange = (e) => {
         setPrescription({ ...prescription, [e.target.name]: e.target.value });
