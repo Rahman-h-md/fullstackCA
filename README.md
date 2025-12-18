@@ -1,6 +1,6 @@
 # SwasthyaSetu - Rural Healthcare Platform
 
-SwasthyaSetu is a full-stack offline-first healthcare platform designed for rural connectivity, featuring real-time blood bank updates and AI-powered health surveys.
+SwasthyaSetu is a full-stack  healthcare platform designed for rural connectivity, featuring real-time blood bank updates and AI-powered health surveys.
 
 ## Tech Stack
 - **Frontend**: React, Vite, Tailwind CSS, PWA (Service Workers), IndexedDB (Dexie).
