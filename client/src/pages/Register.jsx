@@ -40,7 +40,7 @@ const Register = () => {
         <div className="flex items-center justify-center min-h-[calc(100vh-140px)] bg-gray-50 p-4">
             <div className="bg-white p-8 rounded-xl shadow-lg w-full max-w-md border-t-4 border-[#9c1f6e]">
                 <div className="text-center mb-6">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" alt="Emblem" className="h-10 mx-auto mb-2 opacity-80" />
+                    <img src="/national-emblem.png" alt="Emblem" className="h-10 mx-auto mb-2 opacity-80" />
                     <h2 className="text-2xl font-bold text-[#1B365D]">New Registration</h2>
                     <p className="text-sm text-gray-500">Create an account to avail health benefits</p>
                 </div>

@@ -9,10 +9,10 @@ const Header = () => {
             {/* Top Bar - Logos & Title */}
             <div className="bg-white py-4 px-4 md:px-12 flex flex-col md:flex-row justify-between items-center border-b-2 border-orange-500">
                 <div className="flex items-center gap-4 mb-4 md:mb-0">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" alt="National Emblem" className="h-16" />
+                    <img src="/national-emblem.png" alt="National Emblem" className="h-16" />
                     <div className="flex flex-col">
-                        <h1 className="text-xl md:text-2xl font-bold text-gray-800">Ministry of Health and Family Welfare</h1>
-                        <p className="text-sm font-semibold text-gray-600">Government of India</p>
+                        <h1 className="text-xl md:text-2xl font-bold text-gray-800">National Health-Tech Innovation Project</h1>
+                        <p className="text-sm font-semibold text-gray-600">Swasthya Setu</p>
                     </div>
                 </div>
 
